@@ -1,5 +1,3 @@
-import java.text.DecimalFormat
-
 fun main() {
 
     var totalAhorrado = 0
@@ -36,7 +34,7 @@ fun main() {
 
                 if (valor != null && valor in monedas.keys) {
                     monedas[valor] = monedas[valor]!! + 1
-                    totalAhorrado += valor!!
+                    totalAhorrado += valor
                     println("Se agregó una moneda de $valor a la alcancía.")
                 } else {
                     println("Valor no válido.")
@@ -51,7 +49,7 @@ fun main() {
             }
 
             3 -> {
-                println("\nTotal ahorrado: $${DecimalFormat("#,###").format(totalAhorrado)}")
+                println("\nTotal ahorrado: ${formatCurrency(totalAhorrado)}")
             }
 
             4 -> {
@@ -64,11 +62,13 @@ fun main() {
 
             5 -> println("Saliendo del programa...")
 
-            else -> println("Selección no válida, intente nuevamente.")
+            else -> println("Opción no válida, intente nuevamente.")
         }
 
     } while (seleccionUsuario != 5)
 }
 
-
+fun formatCurrency(amount: Int): String {
+    return "%,d".format(amount)
+}
 
