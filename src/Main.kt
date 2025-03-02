@@ -1,8 +1,8 @@
-
-import java.util.Scanner
-
+/* El método containsKey se utiliza para comprobar si el código de
+            acceso que el usuario ha ingresado está presente en los mapas. (Los mapas
+            permiten verificar rápidamente si un código de acceso ingresado es válido
+            y a qué tipo de usuario pertenece si es de empleadosEdificio o visitantesEdificio)*/
 fun main() {
-    val entradaPersonas = Scanner(System.`in`)
     var erroresPersonas = 0
     val maxIntentosPermitidos = 3
     var accesoId = false
@@ -12,14 +12,15 @@ fun main() {
 
     while (erroresPersonas < maxIntentosPermitidos) {
         print("Ingrese su ID por favor: ")
-        val codigoAcceso = entradaPersonas.nextInt()
+        val codigoAcceso = readLine()?.toIntOrNull()
+
+        if (codigoAcceso == null) {
+            println("ID inválido. Intente de nuevo.")
+            erroresPersonas++
+            continue
+        }
 
         when {
-            /* El método containsKey se utiliza para comprobar si el código de
-            acceso que el usuario ha ingresado está presente en los mapas. (Los mapas
-            permiten verificar rápidamente si un código de acceso ingresado es válido
-            y a qué tipo de usuario pertenece si es de empleadosEdificio o visitantesEdificio)*/
-
             empleadosEdificio.containsKey(codigoAcceso) -> {
                 println("Bienvenido, tu ID es: $codigoAcceso")
                 accesoId = true
@@ -27,10 +28,9 @@ fun main() {
             }
             visitantesEdificio.containsKey(codigoAcceso) -> {
                 print("Ingresa tu nombre: ")
-                entradaPersonas.nextLine() // Consumir el salto de línea
-                val nombreVisitante = entradaPersonas.nextLine()
+                val nombreVisitante = readLine() ?: ""
                 print("El motivo de tu visita es: ")
-                val motivoIngreso = entradaPersonas.nextLine()
+                val motivoIngreso = readLine() ?: ""
                 println("Acceso autorizado a $nombreVisitante" +
                         "\nMotivo: $motivoIngreso")
                 accesoId = true
@@ -47,3 +47,4 @@ fun main() {
         println("Acceso bloqueado por exceder los intentos permitidos.")
     }
 }
+
